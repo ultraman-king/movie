@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍" />
+    <meta name="description" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍" />
+    {include file="public/include"}
+</head>
+<body style="background: #eee;">
+{include file="public/head"}
+<div class="detailid wp cf">
+<!--当前位置-->
+<div class="breadcrumbnav">
+     <ul class="breadcrumbs cf">
+        <li class="home"><a href="{$maccms.path}">首页</a></li>
+        {if condition="$obj.type_1.type_id neq '' "}
+        <li><a href="{:mac_url_type($obj.type_1)}">{$obj.type_1.type_name}</a></li>
+        {/if}
+        <li class="color"><a href="{:mac_url_type($obj.type)}">{$obj.type.type_name}</a></li>
+        <li class="color">{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}在线点播</li>
+        <li class="back">
+            <a href="{$obj.player_info.link_pre}">【上一集】</a>
+            <a href="{$obj.player_info.link_next}">【下一集】</a>
+        </li>
+     </ul>
+</div>
+
+<!--播放器-->
+<div class="ui-box" id="detail-box">
+    <div id="bofang_box">
+        {$player_data}
+        {$player_js}
+    </div>
+</div>
+<div class="playvodlist borsxo">
+    <!--在线播放地址-->
+    <div class="yunplay">
+    <div class="downtitle cf">
+	    <ul id="play">
+		    {maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+			<li {if condition="$param.sid eq $key"}class="this"{/if}>{$vo.player_info.show}</li>
+            {/maccms:foreach}
+		</ul>
+	</div>
+	<div id="playlist">
+	{maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+    <div class="videolist cf" {if condition="$param.sid eq $key"}style="display:block"{/if}>
+        {maccms:foreach name="vo.urls" id="vo2" key="key2"}
+        <a class="{if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}playxj{/if}" href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" >{$vo2.name}</a>
+        {/maccms:foreach}
+    </div>
+	{/maccms:foreach}
+	</div>
+    </div>
+</div>
+<script>
+$(function(){
+    $("#play li").click(
+        function(){
+			$(this).addClass("this").siblings().removeClass("this");
+            index = $("#play li").index(this);
+            $("#playlist div").eq(index).fadeIn(800).siblings().hide();
+        }
+    )
+}); 
+</script>
+</div>
+<div style="height:80px" class="hide"></div>
+<span style="display:none" class="mac_ulog_set" alt="设置播放页浏览记录" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+{include file="public/foot"}
+</body>
+</html>

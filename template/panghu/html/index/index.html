@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$maccms.site_name}</title>
+    <meta name="keywords" content="{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="swiper-container waptag">
+<div class="swiper-wrapper deanselectdiv cf borsxo"> 
+   <div class="swiper-slide deansbox deanshot"> 
+    <i></i> 
+    <ul class="cf"> 
+     <li><a href="#" target="_blank">今日最多</a></li> 
+     <li><a href="#" target="_blank">本周最多</a></li> 
+     <li><a href="#" target="_blank">历史最多</a></li> 
+     <li><a href="#" target="_blank">最新上映</a></li> 
+    </ul> 
+   </div> 
+   <div class="swiper-slide deansbox deansarea"> 
+    <i></i> 
+    <ul class="cf"> 
+     <li><a href="#" target="_blank">香港</a></li> 
+     <li><a href="#" target="_blank">大陆</a></li> 
+     <li><a href="#" target="_blank">美国</a></li> 
+     <li><a href="#" target="_blank">韩国</a></li> 
+     <li><a href="#" target="_blank">台湾</a></li> 
+     <li><a href="#" target="_blank">法国</a></li> 
+     <li><a href="#" target="_blank">英国</a></li> 
+     <li><a href="#" target="_blank">泰国</a></li> 
+    </ul> 
+   </div> 
+   <div class="swiper-slide deansbox deanstype"> 
+    <i></i> 
+    <ul class="cf"> 
+     <li><a href="#" target="_blank">喜剧</a></li> 
+     <li><a href="#" target="_blank">恐怖</a></li> 
+     <li><a href="#" target="_blank">爱情</a></li> 
+     <li><a href="#" target="_blank">动作</a></li> 
+     <li><a href="#" target="_blank">科幻</a></li> 
+     <li><a href="#" target="_blank">武侠</a></li> 
+     <li><a href="#" target="_blank">战争</a></li> 
+     <li><a href="#" target="_blank">犯罪</a></li> 
+    </ul> 
+   </div> 
+   <div class="swiper-slide deansbox deansyear"> 
+    <i></i> 
+    <ul class="cf"> 
+     <li><a href="#" target="_blank">2016</a></li> 
+     <li><a href="#" target="_blank">2015</a></li> 
+     <li><a href="#" target="_blank">2014</a></li> 
+     <li><a href="#" target="_blank">2013</a></li> 
+     <li><a href="#" target="_blank">2012</a></li> 
+     <li><a href="#" target="_blank">2011</a></li> 
+     <li><a href="#" target="_blank">2010</a></li> 
+     <li><a href="#" target="_blank">其他</a></li> 
+    </ul> 
+   </div> 
+</div> 
+</div>
+<div class="wapindextop wp type borsxo jiyong">
+{maccms:type parent="current" order="asc" by="sort" mid="1" id="vo3"}
+<div>
+  <div class="headpadtzy">
+      <h2 class="title">{$vo3.type_name}</h2>
+      <div class="headhw album-title">
+          {maccms:type  parent="'.$vo3['type_id'].'" order="asc" by="sort" id="vo4" key="key4"}
+          <a class="word" href="{:mac_url_type($vo4,[],'show')}">{$vo4.type_name}</a>
+          {/maccms:type}
+      </div>
+      <div class="gengduo"><a class="more" href="{:mac_url_type($vo3,[],'show')}">更多</a></div>
+  </div>
+  <div class="modulemod"> 
+    <div class="cf listwap"> 
+	    {maccms:vod num="12" type="'.$vo3['type_id'].'" order="desc" by="time"}
+          <div class="gcol l">
+             <div class="packcover">
+              <a class="aplusexp" href="{:mac_url_vod_detail($vo)}" target="_blank" title="{$vo.vod_name}"><div class="inlist ec-jabj eclazy" data-original="{:mac_url_img($vo.vod_pic)}"></div><span class="packscore">{$vo.vod_score}分</span></a>
+             </div>
+             <div class="infolist">
+              <div class="title" style="max-height: 22px;">
+               <a class="plusclk" href="{:mac_url_vod_detail($vo)}" target="_blank" title="{$vo.vod_name}">{$vo.vod_name}</a>
+              </div>
+              <div class="subtitle album-title">主演：{$vo.vod_actor}</div>
+             </div>
+          </div>
+		{/maccms:vod}
+    </div>
+  </div> 
+</div>
+{/maccms:type}
+<div class="inxlink">
+    <div class="title">友情链接 LINK</div>
+    <ul class="cf">
+	    <li class="l"><a class="themecolor" href="http://www.qymao.cn" target="_blank">企业猫源码网</a></li>
+        <li class="l"><a class="themecolor" href="http://www.qymao.cn/cxyuanma/11751.html" target="_blank">模板下载</a></li>
+        {maccms:link num="10" type="all" order="desc" by="id"}
+        <li class="l"><a class="themecolor" href="{$vo.link_url}" target="_blank">{$vo.link_name}</a></li>
+        {/maccms:link}
+    </ul>
+</div>
+<div class="waplinkbottom"></div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$obj.art_name} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.art_name}最新资讯,推荐资讯" />
+    <meta name="description" content="{$obj.art_name}最新资讯,推荐资讯" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="detailid wp cf">
+<!--当前位置-->
+<div class="breadcrumbnav">
+     <ul class="breadcrumbs cf">
+         <li><a href="{$maccms.path}">首页</a><span class="mianbaox"></span></li>
+		 <li><a href="{:mac_url_type($obj.type)}">{$obj.type.type_name}</a><span class="mianbaox"></span></li>
+         <li CLASS="color">{$obj.art_name}</li>
+     </ul>
+</div>
+<div class="detaildmt l">
+    <h1 class="arth">{$obj.art_name} - {$obj.art_page_list[$param['page']]['title']}</h1>
+    <div class="source"> 来源：{$obj.art_from}&nbsp;&nbsp;&nbsp;发布时间：{$obj.art_time|date='Y-m-d H:i:s',###}&nbsp;&nbsp;&nbsp;浏览次数：{$obj.art_hits}</div>
+    <div class="content">{$obj.art_page_list[$param['page']]['content']}</div>
+    <div class="deandownhelp">
+        <p>若本站收录的文章侵犯了您的权益，请联系我们删除侵权内容！</p>
+    </div>	
+	<div class="bdsharebuttonbox"><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_kaixin001" data-cmd="kaixin001" title="分享到开心网"></a><a href="#" class="bds_mogujie" data-cmd="mogujie" title="分享到蘑菇街"></a><a href="#" class="bds_huaban" data-cmd="huaban" title="分享到花瓣"></a><a href="#" class="bds_tqf" data-cmd="tqf" title="分享到腾讯朋友"></a><a href="#" class="bds_more" data-cmd="more"></a></div>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</div>
+<div class="detailhot searchrt r borsxo">
+    <div style="margin-bottom: 20px;">
+     <div><h2 class="titleyc">最新文章</h2></div>
+     <div class="loading">        
+         <ul>
+			 {maccms:art num="10" type="current" order="desc" by="time"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadiultxt detailtj album-title" href="{:mac_url_art_detail($vo)}" title="{$vo.art_name}" target="_blank">{$vo.art_name}</a><em class="loadiem album-title">{$vo.art_hits_month}</em></li>
+		     {/maccms:art}
+         </ul>
+     </div>
+	</div>
+    <div>
+     <div><h2 class="titleyc">热门影视</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:vod num="10" type="all" order="desc" by="hits"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadia detailtj" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank">{$vo.vod_name}</a><em class="loadiem album-title">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集{else/}{$vo.vod_remarks}{/if}</em></li>
+		     {/maccms:vod}
+         </ul>
+     </div>
+	</div>
+</div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

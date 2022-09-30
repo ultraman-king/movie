@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$obj.topic_name}专题详情- {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.topic_name}电影专题,{$obj.topic_name}电视剧专题,{$obj.topic_name}综艺专题,{$obj.topic_name}动漫专题,{$obj.topic_name}推荐专题" />
+    <meta name="description" content="{$obj.topic_remarks}本站提供{$obj.topic_name},最新最全精品专题数据" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="breadcrumbnav wp">
+     <ul class="breadcrumbs cf">
+         <li><a href="{$maccms.path}">首页</a><span class="mianbaox"></span></li>
+		 <li class="color">专题详细介绍<span class="mianbaox"></span></li>
+		 <li class="color">{$obj.topic_name}</li>
+     </ul>
+</div>	
+<div class="wp cf">
+<div class="ztlist l borsxo">
+  <div class="modulemod"> 
+    <div class="cf listwap"> 
+	    {maccms:foreach num="10" pageurl="topic/detail" paging="yes" name="$obj.vod_list"}
+          <div class="gcol l">
+             <div class="packcover">
+              <a class="aplusexp" href="{:mac_url_vod_detail($vo)}" target="_blank" title="{$vo.vod_name}"><div class="inlist ec-jabj eclazy" data-original="{:mac_url_img($vo.vod_pic)}"></div><span class="packscore">{$vo.vod_score}分</span></a>
+             </div>
+             <div class="infolist">
+              <div class="title" style="max-height: 22px;">
+               <a class="plusclk" href="{:mac_url_vod_detail($vo)}" target="_blank" title="{$vo.vod_name}">{$vo.vod_name}</a>
+              </div>
+              <div class="subtitle album-title">主演：{$vo.vod_actor}</div>
+             </div>
+          </div>
+		{/maccms:foreach}
+    </div>
+  </div> 
+</div>
+<div class="searchrt r borsxo">
+    <div class="sozhuanti">
+	    <div><h2 class="titleyc">精品合集</h2></div>
+	    <ul class="cf">
+			{maccms:topic num="4" order="desc" by="time"}
+			<li class="l">
+			    <div><a href="{:mac_url_topic_detail($vo)}" title="{$vo.topic_name}"><img src="{$vo.topic_pic|mac_url_img}" alt="{$obj.topic_name}" /></a></div>
+				<div><p>{$vo.topic_name}</p></div>
+			</li>
+			{/maccms:topic}
+		</ul>
+	</div>
+    <div>
+     <div><h2 class="titleyc">大家都在看</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:vod num="10" type="all" order="desc" by="hits"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadia detailtj" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank">{$vo.vod_name}</a><em class="loadiem album-title">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集{else/}{$vo.vod_remarks}{/if}</em></li>
+		     {/maccms:vod}
+         </ul>
+     </div>
+	</div>
+</div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

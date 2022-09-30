@@ -1,0 +1,30 @@
+<div class="wp head">
+    <div class="navtop cf">
+	    <div class="logo l"><a href="{$maccms.path}" title="{$maccms.site_name}">
+		<img class="pclogo" src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}" />
+		<img class="waplogo" src="{$maccms.path_tpl}images/waplogo.png" alt="{$maccms.site_name}" />
+		</a></div>
+		<div class="sowd r">
+            <form id="search" class="cf" name="search" method="get" action="{:mac_url('vod/search')}" onSubmit="return qrsearch();">
+                <input type="text" name="wd" class="search-input mac_wd l" value="{$param.wd}" placeholder="请在此处输入影片名或演员名称" />
+                <input type="submit" id="searchbutton"  class="search-button mac_search l" value="搜索影片" />
+            </form>
+		</div>
+        <div class="waphead">
+		     <form id="search" class="cf" name="search" method="get" action="{:mac_url('vod/search')}" onSubmit="return qrsearch();">
+			 <input type="text" class="soinput" name="wd" value="{$param.wd}" placeholder="搜索一下" />
+			 <input type="submit" id="searchbutton" class="sllogo" />
+			 </form>
+        </div>
+	</div>
+	<div class="swiper-container headnav cf borsxo">
+	    <ul class="swiper-wrapper">
+		     <li class='swiper-slide {if condition="$maccms.aid eq 1"}ecnav{/if}'><a href="{$maccms.path}">首页</a><span class="navbottom"></span></li>
+			 {maccms:type ids="parent" order="asc" by="sort"}
+             <li class='swiper-slide {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"}ecnav{/if}'><a href="{:mac_url_type($vo)}">{$vo.type_name}</a><span class="navbottom"></span></li>
+             {/maccms:type}
+			 <li class="swiper-slide"><a href="{:mac_url('topic/index')}">专题</a></li>
+		</ul>
+	</div>
+</div>
+<div class="wapqtop"></div>

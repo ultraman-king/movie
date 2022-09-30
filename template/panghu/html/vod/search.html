@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果" />
+    <meta name="description" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="breadcrumbnav wp">
+     <ul class="breadcrumbs cf">
+         <li><a href="{$maccms.path}">首页</a><span class="mianbaox"></span></li>
+		 <li class="color">"{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}"搜索结果<span class="mianbaox"></span></li>
+		 <li class="color">胖虎影视为你搜索到<strong class="mac_total"></strong>个资源</li>
+     </ul>
+</div>
+<div class="wp cf">
+<div class="leftlist l borsxo">
+	{maccms:vod num="10" paging="yes" pageurl="vod/search" order="desc" by="time"}
+	<div class="search">
+		<h3 class="title"><a style="font-size: 16px;" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank"><span class="titletext blocka"><em>{$vo.vod_name}</em>_1080p迅雷下载</span></a></h3>
+		<div class="row cf">
+			<div class="disrelative">
+				<a href="{:mac_url_vod_detail($vo)}" target="_blank" class="blocka"><img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="posterimgsize"><span class="playicon"></span></a>
+			</div>
+			<div class="spanlast l">
+				<div class="list">
+					<span class="lradius">原画质</span><span>{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集/共{$vo.vod_total}集{else/}{$vo.vod_remarks}{/if}</span>
+				</div>
+				<div>
+					<span class="gray">{$vo.vod_year|mac_default}<span class="gapleftsmall">|</span>中国大陆</span>
+				</div>
+				<div>
+					<div class="actorclamp album-title">
+						<span>主演：</span>{$vo.vod_actor|mac_url_create='actor'}
+					</div>
+					<div class="actorclamp">
+						<span class="gray">类型：</span>{$vo.vod_class|mac_url_create='class'}
+					</div>
+				</div>
+				<div class="disflex">
+					<div>简介：</div>
+					<div>
+						<span class="blurb">《{$vo.vod_blurb}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{/maccms:vod}
+    <div class="ui-bar list-page fn-clear">
+        {include file="public/paging"}
+    </div>
+    <script>
+        $('.mac_total').html('{$__PAGING__.record_total}');
+    </script>
+</div>
+<div class="searchrt r borsxo">
+    <div class="sozhuanti">
+	    <div><h2 class="titleyc">精品合集</h2></div>
+	    <ul class="cf">
+			{maccms:topic num="4" order="desc" by="time"}
+			<li class="l">
+			    <div><a href="{:mac_url_topic_detail($vo)}" title="{$vo.topic_name}"><img src="{$vo.topic_pic|mac_url_img}" alt="{$obj.topic_name}" /></a></div>
+				<div><p>{$vo.topic_name}</p></div>
+			</li>
+			{/maccms:topic}
+		</ul>
+	</div>
+    <div>
+     <div><h2 class="titleyc">大家都在看</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:vod num="10" type="all" order="desc" by="hits"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadia detailtj" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank">{$vo.vod_name}</a><em class="loadiem album-title">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集{else/}{$vo.vod_remarks}{/if}</em></li>
+		     {/maccms:vod}
+         </ul>
+     </div>
+	</div>
+</div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

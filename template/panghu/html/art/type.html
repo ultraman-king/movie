@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$obj.type_title} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.type_key}" />
+    <meta name="description" content="{$obj.type_des}" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="breadcrumbnav wp">
+     <ul class="breadcrumbs cf">
+         <li><a href="{$maccms.path}">首页</a><span class="mianbaox"></span></li>
+		 <li class="color">{$obj.type_name}</li>
+     </ul>
+</div>	
+<div class="wp cf">
+<div class="art l borsxo">
+    <div class="filter_line filter_line_0">
+    <span class="filter_label">分类</span>
+    {maccms:type ids="current" order="asc" by="sort"}
+    <a class="filter_item{if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"} licurrent{/if}" href="{:mac_url_type($vo)}">{$vo.type_name}</a>
+    {/maccms:type}
+    </div>
+    <div class="cf wenzhang"> 
+        <ul class="pianyi">
+             {maccms:art num="10" paging="yes" type="current" order="desc" by="time"}
+             <li class="haveimg"> 
+				 <a href="{:mac_url_art_detail($vo)}"><div class="ec-txbj eclazy" data-original="{$vo.art_pic|mac_url_img}"></div></a>
+                 <div class="content">
+		             <h3><a class="title" href="{:mac_url_art_detail($vo)}">{$vo.art_name}</a></h3>
+                     <p class="abstract">{$vo.art_blurb}</p>
+                     <div class="meta"><a class="nickname" href="{:mac_url_type($vo.type)}">{$vo.type.type_name}</a><span>&nbsp;&nbsp;阅读：{$vo.art_hits}&nbsp;&nbsp;</span> <span> 发布：{$vo.art_time|date='Y-m-d',###}</span> </div>
+			     </div>
+             </li>
+             {/maccms:art}
+        </ul>
+        {include file="public/paging"}
+    </div>
+</div>
+<div class="searchrt r borsxo">
+    <div class="sozhuanti">
+	    <div><h2 class="titleyc">精品合集</h2></div>
+	    <ul class="cf">
+			{maccms:topic num="4" order="desc" by="time"}
+			<li class="l">
+			    <div><a href="{:mac_url_topic_detail($vo)}" title="{$vo.topic_name}"><img src="{$vo.topic_pic|mac_url_img}" alt="{$obj.topic_name}" /></a></div>
+				<div><p>{$vo.topic_name}</p></div>
+			</li>
+			{/maccms:topic}
+		</ul>
+	</div>
+    <div>
+     <div><h2 class="titleyc">热点影视资讯</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:art num="20" order="desc" by="hits_month"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadiultxt detailtj album-title" href="{:mac_url_art_detail($vo)}" title="{$vo.art_name}" target="_blank">{$vo.art_name}</a><em class="loadiem album-title">{$vo.art_hits_month}</em></li>
+		     {/maccms:art}
+         </ul>
+     </div>
+	</div>
+</div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

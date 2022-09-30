@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="{$maccms.site_name}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+	<meta name="theme-color" content="#4662d9" />
+	<link rel="shortcut icon" href="{$maccms.path_tpl}images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$maccms.path_tpl}images/ico/icon57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$maccms.path_tpl}images/ico/icon152.png" />
+    <link rel="icon" sizes="114x114" href="{$maccms.path_tpl}images/ico/icon114.png" /> 
+    <meta charset="utf-8" />
+    <title>{$obj.vod_name}详情介绍-{$obj.vod_name}在线观看-{$obj.vod_name}迅雷下载 - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$obj.vod_name}在线收看,{$obj.vod_name}迅雷下载" />
+    <meta name="description" content="{$obj.vod_name}剧情:{$obj.vod_blurb}" />
+    {include file="public/include"}	
+</head>
+<body>
+{include file="public/head"}
+<div class="detailid wp cf">
+<!--当前位置-->
+<div class="breadcrumbnav">
+     <ul class="breadcrumbs cf">
+         <li><a href="{$maccms.path}">首页</a><span class="mianbaox"></span></li>
+		 <li><a href="{:mac_url_type($obj.type_1)}">{$obj.type_1.type_name}</a><span class="mianbaox"></span></li>
+         <li><a href="{:mac_url_type($obj.type)}">{$obj.type.type_name}</a><span class="mianbaox"></span></li>
+         <li CLASS="color">{$obj.vod_name}在线点播{$obj.vod_nmae}迅雷下载</li>
+     </ul>
+</div>
+<div class="detaildmt l">
+    <!-- 图文介绍 -->
+    <div class="detailcols cf">
+        <div class="detailpic l"><img src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" /></div>
+        <div class="detailinfo r">
+		     <h1>{$obj.vod_name}</h1>
+			 <p><span>◎状态：</span>{$obj.vod_remarks|mac_default=$obj.vod_hits.'播放'}</p>
+			 <p><span>◎导演：</span>{$obj.vod_director|mac_url_create='director'}</p>
+			 <p class="album-title"><span>◎主演：</span>{$obj.vod_actor|mac_url_create='actor'}</p>
+             <p class="hide"><span>◎人气：</span>{$obj.vod_hits}</p>
+			 <p><span>◎语言：</span>{$obj.vod_lang}</p>
+			 <p class="hide"><span>◎地区：</span>{$obj.vod_area}</p>
+			 <p class="hide"><span>◎时间：</span>{$obj.vod_time|date='Y-m-d',###}</p>
+			 <p><span>◎年份：</span>{$obj.vod_year|mac_url_create='year'}</p>
+			 <p class="hide"><span>◎类型：</span>{$obj.vod_class|mac_url_create='class'}</p>
+			 <div class="button">
+			     <a class="down" href="#xiazai">下载</a>
+				 <a class="play" href="#bofang">在线播放</a>
+			 </div>
+        </div>
+    </div>
+	<div class="uibox">
+         <div class="uititle"><h3>剧情介绍</h3></div>
+         <div class="tjuqing">{$obj.vod_content|mac_url_content_img}</div>
+    </div>
+    {if condition="$obj.vod_copyright eq 1 && $GLOBALS['config']['app']['copyright_status'] eq 1 "}
+    <div>由于版权限制，暂不提资源地址。</div>
+    {else/}
+    <!--下载地址-->
+    <div class="downxunlei"><a name="xiazai"></a>
+        <div class="downtitle cf">
+	    <ul id="down">
+		    {maccms:foreach name="obj.vod_down_list" id="vo" by="num"}
+			<li {if condition="$key==1"}class="this"{/if}>{$vo.player_info.show}</li>
+            {/maccms:foreach}
+		</ul>
+	    </div>
+		<div id="downlist">
+		{maccms:foreach name="obj.vod_down_list" id="vo" by="num"}
+        <div class="downlist cf" {if condition="$key==1"}style="display:block"{/if}>
+             {maccms:foreach name="vo.urls" id="vo2" key="key2"}
+             <p>{$vo2.name}{$vo2.url}</p>
+             {/maccms:foreach}
+        </div>
+		{/maccms:foreach}
+		</div>
+    </div>
+    <!--在线播放地址-->
+    <div class="yunplay"><a  name="bofang"></a>
+    <div class="downtitle cf">
+	    <ul id="play">
+		    {maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+			<li {if condition="$key==1"}class="this"{/if}>{$vo.player_info.show}</li>
+            {/maccms:foreach}
+		</ul>
+	</div>
+	<div id="playlist">
+	{maccms:foreach name="obj.vod_play_list" id="vo" by="num"}
+    <div class="videolist cf" {if condition="$key==1"}style="display:block"{/if}>
+        {maccms:foreach name="vo.urls" id="vo2" key="key2"}
+        <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" >{$vo2.name}</a>
+        {/maccms:foreach}
+    </div>
+	{/maccms:foreach}
+	</div>
+    </div>
+    {/if}
+    <div class="deandownhelp">
+        <p>《{$obj.vod_name}》-下载帮助：</p>
+		<p>1、本站网盘资源收集自网络，不保证长期有效，喜欢请尽快下载。</p>
+		<p>2、磁力链接直接复制到迅雷-百度云盘-115云盘内即可下载。<a style="text-decoration: underline;color: #4662d9;" href="{:mac_url('label/xiazai')}" target="_blank">操作教程</a></p>
+		<p>3、所有资源来源网络，与本站无关，如侵犯您的权益，请联系站长QQ{$maccms.site_qq}删除资源。</p>
+    </div>	
+	<div class="bdsharebuttonbox"><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_kaixin001" data-cmd="kaixin001" title="分享到开心网"></a><a href="#" class="bds_mogujie" data-cmd="mogujie" title="分享到蘑菇街"></a><a href="#" class="bds_huaban" data-cmd="huaban" title="分享到花瓣"></a><a href="#" class="bds_tqf" data-cmd="tqf" title="分享到腾讯朋友"></a><a href="#" class="bds_more" data-cmd="more"></a></div>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<script>
+$(function(){
+    $("#play li").click(
+        function(){
+			$(this).addClass("this").siblings().removeClass("this");
+            index = $("#play li").index(this);
+            $("#playlist div").eq(index).fadeIn(800).siblings().hide();
+        }
+    )
+}); 
+$(function(){
+    $("#down li").click(
+        function(){
+			$(this).addClass("this").siblings().removeClass("this");
+            index = $("#down li").index(this);
+            $("#downlist div").eq(index).fadeIn(800).siblings().hide();
+        }
+    )
+}); 
+</script>
+<div class="ui-box marg" id="pinglun" >
+    <div class="ui-title">
+        <h3>评论</h3>
+    </div>
+    <div class="mac_comment" data-id="{$obj.vod_id}" data-mid="{$maccms.mid}" ></div>
+    <script>
+        $(function(){
+            MAC.Comment.Login = {$comment.login};
+            MAC.Comment.Verify = {$comment.verify};
+            MAC.Comment.Init();
+            MAC.Comment.Show(1);
+        });
+    </script>
+</div>
+</div>
+<div class="detailhot searchrt r borsxo">
+    <div style="margin-bottom: 20px;">
+     <div><h2 class="titleyc">相关下载</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:vod num="10" ids="'.$obj['vod_rel_vod'].'" order="desc" by="time"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadia detailtj" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank">{$vo.vod_name}</a><em class="loadiem album-title">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集{else/}{$vo.vod_remarks}{/if}</em></li>
+		     {/maccms:vod}
+         </ul>
+     </div>
+	</div>
+    <div>
+     <div><h2 class="titleyc">为您推荐</h2></div>
+     <div class="loading">        
+         <ul>
+		     {maccms:vod num="10" type="current" order="desc" by="time"}
+             <li class="loadiul"><span class='loadia1 {if condition="$key==1"} loadia2{elseif condition="($key==2) "/} loadia3{elseif condition="($key==3) "/} loadia4{/if}'>{$key}</span><a class="loadia detailtj" href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" target="_blank">{$vo.vod_name}</a><em class="loadiem album-title">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集{else/}{$vo.vod_remarks}{/if}</em></li>
+		     {/maccms:vod}
+         </ul>
+     </div>
+	</div>
+</div>
+</div>
+{include file="public/foot"}
+</body>
+</html>
